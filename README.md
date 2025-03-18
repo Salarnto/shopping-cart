@@ -1,4 +1,4 @@
-![Showcase Banner](./src/assets/preview.png)
+![Showcase Banner](./src/assets/showcase-banner.png)
 
 # Shopping Cart
 
