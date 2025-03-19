@@ -28,7 +28,7 @@ const CartItemCard: React.FC<CartItemProps> = ({ item }) => {
             <img
                 src={item.product.image}
                 alt={item.product.name}
-                className="w-50 h-50 object-cover"
+                className="w-30 sm:w-50 sm:h-50 object-cover"
             />
             <div className="flex flex-col justify-around w-full p-4">
                 <CardHeader className="px-0">
