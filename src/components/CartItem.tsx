@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { CartItem as CartItemType } from "@/types/types";
 import { Minus, Plus } from 'lucide-react';
-import { useCart } from "@/context/CartContext";
+import useCart from "@/hooks/useCart";
 
 interface CartItemProps {
     item: CartItemType;

@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { Product, CartItem } from '../types/types';
 import toast from 'react-hot-toast';
 
-export interface CartState {
+interface CartState {
     items: CartItem[];
     total: number;
 }
 
-export interface CartContextType extends CartState {
+interface CartContextType extends CartState {
     addItem: (product: Product) => void;
     removeItem: (id: number) => void;
     updateQuantity: (id: number, quantity: number) => void;
@@ -20,7 +20,7 @@ type CartAction =
   | { type: 'UPDATE_QUANTITY'; payload: { id: number; quantity: number } }
   | { type: 'CLEAR_CART' };
 
-  const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | null>(null);
 
 const cartReducer = (state: CartState, action: CartAction) => {
     switch (action.type) {
@@ -72,7 +72,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
     }
 }
 
-const CartProvider = ({ children } : { children: React.ReactNode }) => {
+export const CartProvider = ({ children } : { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0 });
 
     const addItem = (product: Product) => {
@@ -100,8 +100,7 @@ const CartProvider = ({ children } : { children: React.ReactNode }) => {
     return (
         <CartContext.Provider
             value={{
-                items: state.items,
-                total: state.total,
+                ...state,
                 addItem,
                 removeItem,
                 updateQuantity,
@@ -112,13 +111,3 @@ const CartProvider = ({ children } : { children: React.ReactNode }) => {
         </CartContext.Provider>
     );
 }
-
-export function useCart() {
-    const context = useContext(CartContext);
-    if (context === undefined) {
-      throw new Error('useCart must be used within a CartProvider');
-    }
-    return context;
-}
- 
-export default CartProvider;
